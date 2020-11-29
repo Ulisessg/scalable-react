@@ -1,6 +1,7 @@
 //@ts-check
-const { mkdirs } = require('./utils/index');
+const { mkdirs, createFile } = require('./utils/index');
 
 module.exports = {
   mkdirs,
+  createFile,
 };
