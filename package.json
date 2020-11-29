@@ -1,4 +1,5 @@
 {
+  "type": "commonjs",
   "name": "scalable-react",
   "version": "0.0.1",
   "description": "",
@@ -15,5 +16,9 @@
     "npm"
   ],
   "author": "UlisesSG <ukisessg@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "scalable-react": "./bin/global.js"
+  },
+  "preferGlobal": true
 }
