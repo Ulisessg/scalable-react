@@ -42,6 +42,12 @@ const { mkdirs, copyFile } = require('../src/index');
       '../src/templates/.eslintrc',
       join(process.cwd(), '.eslintrc'),
     );
+
+    //package.json
+    await copyFile(
+      '../src/templates/package.json',
+      join(process.cwd(), 'package.json'),
+    );
   } catch (error) {
     throw error;
   }
