@@ -31,10 +31,16 @@ const { mkdirs, copyFile } = require('../src/index');
       '../src/templates/.gitignore',
       join(process.cwd(), '.gitignore'),
     );
-
+    //.babelrc
     await copyFile(
       '../src/templates/.babelrc',
       join(process.cwd(), '.babelrc'),
+    );
+
+    //.eslintrc
+    await copyFile(
+      '../src/templates/.eslintrc',
+      join(process.cwd(), '.eslintrc'),
     );
   } catch (error) {
     throw error;
