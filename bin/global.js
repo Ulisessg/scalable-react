@@ -20,40 +20,41 @@ async function init() {
 
     //Create index.html
     await copyFile(
-      '../src/templates/index.html',
+      join(__dirname, '..', 'src', 'templates', 'index.html'),
       join(process.cwd(), 'public', 'index.html'),
     );
 
     //Create index.js
     await copyFile(
-      '../src/templates/index.js',
+      join(__dirname, '..', 'src', 'templates', 'index.js'),
       join(process.cwd(), 'src', 'react', 'pages', 'index.js'),
     );
 
     //.gitignore
     await copyFile(
-      '../src/templates/.gitignore',
+      join(__dirname, '..', 'src', 'templates', '.gitignore'),
       join(process.cwd(), '.gitignore'),
     );
     //.babelrc
     await copyFile(
-      '../src/templates/.babelrc',
+      join(__dirname, '..', 'src', 'templates', '.babelrc'),
       join(process.cwd(), '.babelrc'),
     );
 
     //.eslintrc
     await copyFile(
-      '../src/templates/.eslintrc',
+      join(__dirname, '..', 'src', 'templates', '.eslintrc'),
       join(process.cwd(), '.eslintrc'),
     );
 
     //package.json
     await copyFile(
-      '../src/templates/package.json',
+      join(__dirname, '..', 'src', 'templates', 'package.json'),
       join(process.cwd(), 'package.json'),
     );
+    //webpack.dev.js
     await copyFile(
-      '../src/templates/webpack.dev.js',
+      join(__dirname, '..', 'src', 'templates', 'webpack.dev.js'),
       join(process.cwd(), 'webpack.dev.js'),
     );
   } catch (error) {
