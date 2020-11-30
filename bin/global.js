@@ -25,6 +25,11 @@ const { mkdirs, copyFile } = require('../src/index');
       '../src/templates/index.js',
       join(process.cwd(), 'src', 'react', 'pages', 'index.js'),
     );
+
+    await copyFile(
+      '../src/templates/.gitignore',
+      join(process.cwd(), '.gitignore'),
+    );
   } catch (error) {
     throw error;
   }
