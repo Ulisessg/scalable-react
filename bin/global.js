@@ -3,6 +3,7 @@
 
 //Modules
 const { join } = require('path');
+const { exec } = require('child_process');
 
 const action = process.argv[2];
 
@@ -60,16 +61,21 @@ async function init() {
   }
 }
 
-function develop() {
-  //
+function develop(file) {
+  const devExec = exec(
+    `FILE=${file} webpack serve --progress --color --config ./webpack.dev.js`,
+  );
+  devExec.stdout.on('data', (data) => {
+    console.log(data);
+  });
 }
 
 switch (action) {
   case 'init':
     init();
     break;
-  case 'develop':
-    develop();
+  case 'dev':
+    develop(process.argv[3]);
     break;
   default:
     throw new Error(`This command doesn't exist`);
