@@ -1,8 +1,8 @@
 //@ts-check
 const mkdirs = require('./mkdirs');
-const createFile = require('./createFile');
+const copyFile = require('./copyFile');
 
 module.exports = {
   mkdirs,
-  createFile,
+  copyFile,
 };

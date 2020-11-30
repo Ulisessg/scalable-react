@@ -2,13 +2,22 @@
 //@ts-check
 
 //Data
-const { directories, indexHtml } = require('../src/data/index');
+const { directories } = require('../src/data/index');
 
 //Utils
-const { mkdirs, createFile } = require('../src/index');
+const { mkdirs, copyFile } = require('../src/index');
 
-//Make directiores
-mkdirs(directories);
+(async function main() {
+  try {
+    //Make directiores
+    await mkdirs(directories);
 
-//Create index.html
-createFile(indexHtml[0], indexHtml[1], 'index', '.html');
+    //Create index.html
+    await copyFile(
+      '../src/templates/index.html',
+      `${process.cwd()}/public/index.html`,
+    );
+  } catch (error) {
+    throw error;
+  }
+})();

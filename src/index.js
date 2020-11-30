@@ -1,7 +1,7 @@
 //@ts-check
-const { mkdirs, createFile } = require('./utils/index');
+const { mkdirs, createFile, copyFile } = require('./utils/index');
 
 module.exports = {
   mkdirs,
-  createFile,
+  copyFile,
 };
