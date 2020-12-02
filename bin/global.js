@@ -11,7 +11,7 @@ const action = process.argv[2];
 const { directories } = require('../src/data/index');
 
 //Utils
-const { mkdirs, copyFile } = require('../src/index');
+const { mkdirs, copyFile, build } = require('../src/index');
 
 async function init() {
   try {
@@ -52,12 +52,20 @@ async function init() {
       join(__dirname, '..', 'src', 'templates', 'package.json'),
       join(process.cwd(), 'package.json'),
     );
+
+    //webpack.production.js
+    await copyFile(
+      join(__dirname, '..', 'src', 'templates', 'webpack.production.js'),
+      join(process.cwd(), 'webpack.production.js'),
+    );
+
     //webpack.dev.js
     await copyFile(
       join(__dirname, '..', 'src', 'templates', 'webpack.dev.js'),
       join(process.cwd(), 'webpack.dev.js'),
-    );
-    exec(`cd ${process.cwd()}; npm install --force`);
+    ).then(() => {
+      exec(`cd ${process.cwd()}; npm install --force`);
+    });
   } catch (error) {
     throw error;
   }
@@ -78,6 +86,9 @@ switch (action) {
     break;
   case 'dev':
     develop(process.argv[3]);
+    break;
+  case 'build':
+    build();
     break;
   default:
     throw new Error(`This command doesn't exist`);

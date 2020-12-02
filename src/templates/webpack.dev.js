@@ -16,6 +16,7 @@ module.exports = {
   },
   output: {
     path: join(__dirname, 'dist'),
+    filename: 'js/[name].[fullhash].js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
