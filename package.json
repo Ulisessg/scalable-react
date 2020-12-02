@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "sudo rm -rf ./testing; mkdir testing; cd testing; scalable-react"
+    "test": "sudo rm -rf ./testing; mkdir testing; cd testing; scalable-react init"
   },
   "keywords": [
     "react",

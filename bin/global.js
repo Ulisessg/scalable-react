@@ -57,6 +57,7 @@ async function init() {
       join(__dirname, '..', 'src', 'templates', 'webpack.dev.js'),
       join(process.cwd(), 'webpack.dev.js'),
     );
+    exec(`cd ${process.cwd()}; npm install --force`);
   } catch (error) {
     throw error;
   }
