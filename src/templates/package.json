@@ -1,5 +1,5 @@
 {
-  "name": "Scalable-react-app",
+  "name": "scalable-react-app",
   "main": "./src/react/pages/index.js",
   "description": "A scalabe React App",
   "scripts": {

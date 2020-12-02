@@ -1,4 +1,4 @@
-const { join } = require('path');
+const { join, resolve } = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
@@ -10,12 +10,13 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const file = process.env.FILE;
-const path = join(__dirname, 'src', 'react', 'pages', file);
+
+// const path = ;
 
 module.exports = {
   mode: 'production',
   entry: {
-    [file]: path,
+    [file]: join(__dirname, 'src', 'react', 'pages', file),
   },
   output: {
     path: join(__dirname, 'dist'),
@@ -90,6 +91,13 @@ module.exports = {
       filename: join(__dirname, 'dist', file.split('.')[0].concat('.html')),
       chunks: [file],
       scriptLoading: 'defer',
+    }),
+    new webpack.DllReferencePlugin({
+      context: join(__dirname),
+      manifest: join(__dirname, 'dist', 'modules-manifest.json'),
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: resolve(__dirname, './dist/auto/modules.dll.js'),
     }),
   ],
 };

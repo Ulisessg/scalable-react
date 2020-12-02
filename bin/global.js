@@ -16,7 +16,7 @@ const { mkdirs, copyFile, build } = require('../src/index');
 async function init() {
   try {
     //Make directiores
-    await mkdirs(directories);
+    mkdirs(directories);
 
     //Create index.html
     await copyFile(
@@ -59,13 +59,32 @@ async function init() {
       join(process.cwd(), 'webpack.production.js'),
     );
 
+    //webpack.dll.js
+    await copyFile(
+      join(__dirname, '..', 'src', 'templates', 'webpack.dll.js'),
+      join(process.cwd(), 'webpack.dll.js'),
+    );
+
     //webpack.dev.js
     await copyFile(
       join(__dirname, '..', 'src', 'templates', 'webpack.dev.js'),
       join(process.cwd(), 'webpack.dev.js'),
-    ).then(() => {
-      exec(`cd ${process.cwd()}; npm install --force`);
-    });
+    )
+      .then(() => {
+        const install = exec(`cd ${process.cwd()}; npm install --force`);
+        install.stdout.on('data', () => {
+          console.log('Installing dependencies');
+        });
+      })
+      .then(() => {
+        const reBuiding = exec('scalable-react init', (err) => {
+          if (err) throw err;
+          console.log('Success');
+        });
+        reBuiding.stdout.on('data', () => {
+          console.log('Just one second');
+        });
+      });
   } catch (error) {
     throw error;
   }
