@@ -15,7 +15,13 @@ At the moment you need to create 2 files with same name to create a new page:
 
 ## Scripts 🧰
 
-**You have 2 scripts, one for development and other for production:**
+**You have 3 scripts, one for initial configuration one for production and other for development:**
+
+**Init**
+
+Execute
+
+    scalable-react init
 
 **Develop** 🤖
 
