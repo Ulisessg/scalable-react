@@ -2,92 +2,67 @@
 //@ts-check
 
 //Modules
-const { join } = require('path');
+const { join, resolve } = require('path');
 const { exec } = require('child_process');
+const fs = require('fs');
 
 const action = process.argv[2];
-
-//Data
-const { directories } = require('../src/data/index');
 
 //Utils
 const { mkdirs, copyFile, build } = require('../src/index');
 
+const cwd = process.cwd();
 async function init() {
-  try {
-    //Make directiores
-    mkdirs(directories);
+  //Assets
+  mkdirs(join(cwd, 'assets', 'icons'));
+  mkdirs(join(cwd, 'assets', 'images'));
 
-    //Create index.html
-    await copyFile(
+  //Create index.html
+  mkdirs(join(cwd, 'public')).finally(() => {
+    fs.copyFile(
       join(__dirname, '..', 'src', 'templates', 'index.html'),
-      join(process.cwd(), 'public', 'index.html'),
+      join(cwd, 'public', 'index.html'),
+      (err) => {
+        if (err) throw err;
+        console.log('index.html copied');
+      },
     );
+  });
 
-    //Create index.js
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', 'index.js'),
-      join(process.cwd(), 'src', 'react', 'pages', 'index.js'),
-    );
+  //React
+  mkdirs(join(cwd, 'src', 'react'));
+  mkdirs(join(cwd, 'src', 'react', 'pages'));
+  mkdirs(join(cwd, 'src', 'react', 'atoms'));
+  mkdirs(join(cwd, 'src', 'react', 'molecules'));
+  mkdirs(join(cwd, 'src', 'react', 'organisms'));
+  mkdirs(join(cwd, 'src', 'react', 'templates'));
 
-    //.gitignore
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', '.gitignore'),
-      join(process.cwd(), '.gitignore'),
-    );
-    //.babelrc
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', '.babelrc'),
-      join(process.cwd(), '.babelrc'),
-    );
+  //Styles
+  mkdirs(join(cwd, 'src', 'styles', 'atoms'));
+  mkdirs(join(cwd, 'src', 'styles', 'molecules'));
+  mkdirs(join(cwd, 'src', 'styles', 'organisms'));
+  mkdirs(join(cwd, 'src', 'styles', 'templates'));
+  mkdirs(join(cwd, 'src', 'styles', 'pages'));
 
-    //.eslintrc
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', '.eslintrc'),
-      join(process.cwd(), '.eslintrc'),
-    );
+  //.gitignore
+  copyFile('.gitignore', '.gitignore');
+  //.babelrc
+  copyFile('.babelrc', '.babelrc');
 
-    //package.json
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', 'package.json'),
-      join(process.cwd(), 'package.json'),
-    );
+  //.eslintrc
+  copyFile('.eslintrc', '.eslintrc');
 
-    //webpack.production.js
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', 'webpack.production.js'),
-      join(process.cwd(), 'webpack.production.js'),
-    );
+  //package.json
+  copyFile('package.json', 'package.json');
 
-    //webpack.dll.js
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', 'webpack.dll.js'),
-      join(process.cwd(), 'webpack.dll.js'),
-    );
+  //webpack.production.js
+  copyFile('webpack.production.js', 'webpack.production.js');
 
-    //webpack.dev.js
-    await copyFile(
-      join(__dirname, '..', 'src', 'templates', 'webpack.dev.js'),
-      join(process.cwd(), 'webpack.dev.js'),
-    )
-      .then(() => {
-        const install = exec(`cd ${process.cwd()}; npm install --force`);
-        install.stdout.on('data', () => {
-          console.log('Installing dependencies');
-        });
-      })
-      .then(() => {
-        const reBuiding = exec('scalable-react init', (err) => {
-          if (err) throw err;
-          console.log('Success');
-        });
-        reBuiding.stdout.on('data', () => {
-          console.log('Just one second');
-        });
-      });
-  } catch (error) {
-    throw error;
-  }
+  //webpack.dll.js
+  copyFile('webpack.dll.js', 'webpack.dll.js');
+
+  //webpack.dev.js
+  copyFile('webpack.dev.js', 'webpack.dev.js');
 }
 
 function develop(file) {
@@ -101,7 +76,39 @@ function develop(file) {
 
 switch (action) {
   case 'init':
-    init();
+    init().finally(() => {
+      //.index.js
+      fs.writeFile(
+        join(cwd, 'src', 'react', 'pages', 'index.js'),
+        `import React from 'react';
+import ReactDom from 'react-dom';
+
+ReactDom.render(
+  <h1>
+    Now you can build the future&nbsp;
+    <span aria-label='emoji de sonrisa' role='img'>
+      😄
+    </span>
+  </h1>,
+  document.getElementById('root'),
+);`,
+        () => {
+          console.log('Index file created');
+        },
+      );
+
+      console.log('Installing dependencies');
+      const install = exec(`cd ${cwd}; npm install --force`);
+
+      install.on('message', (message) => {
+        console.log(message);
+      });
+
+      install.on('error', (err) => {
+        throw err;
+      });
+    });
+
     break;
   case 'dev':
     develop(process.argv[3]);

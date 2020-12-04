@@ -1,23 +1,15 @@
 //@ts-check
 const { mkdir } = require('fs');
 
-function mkdirs(dirs = []) {
-  if (dirs.length === 0) {
+async function mkdirs(dir) {
+  if (dir.length === 0) {
     throw new Error('No directories, tell me, which directories do you want');
   }
 
-  for (let i = 0; i < dirs.length; i++) {
-    if (i < dirs.length) {
-      return 'Success';
-    }
-    const paths = `${process.cwd()}/${dirs[i]}`;
-
-    mkdir(paths, { recursive: true }, (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-  }
+  mkdir(dir, { recursive: true }, (err, path) => {
+    if (err) throw err;
+    console.log(`${dir} created`);
+  });
 }
 
 module.exports = mkdirs;

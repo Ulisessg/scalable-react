@@ -3,7 +3,9 @@
   "main": "./src/react/pages/index.js",
   "description": "A scalabe React App",
   "scripts": {
-    "lint": "eslint ./src/react/**/* --fix"
+    "lint": "eslint ./src/react/**/* --fix",
+    "dev": "scalable-react dev",
+    "build": "scalable-react build"
   },
   "license": "MIT",
   "devDependencies": {

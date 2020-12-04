@@ -1,7 +1,7 @@
 {
   "type": "commonjs",
   "name": "scalable-react",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,14 @@
     "node",
     "npm"
   ],
+  "repository": {
+    "url": "https://github.com/Ulisessg/scalable-react#readme"
+  },
+  "readme": "README.md",
   "author": "UlisesSG <ukisessg@gmail.com>",
   "license": "MIT",
   "bin": {
-    "scalable-react": "./bin/global.js"
+    "scalable-react": "bin/global.js"
   },
   "preferGlobal": true
 }
